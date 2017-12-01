@@ -2,6 +2,7 @@
 from flask import Flask, request, session, render_template
 from flask_sqlalchemy import SQLAlchemy
 
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./static/BeerSchema.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = None
@@ -96,7 +97,7 @@ def beers():
                                                            Beers.a_spr,
                                                            Beers.a_sum,
                                                            Beers.a_fal,
-                                                           Beers.a_fal,
+                                                           Beers.a_win,
                                                            Breweries.name)
     return render_template('beers.html', beers=beer_list)
 
@@ -133,7 +134,7 @@ def beer(beer_id=None):
     beer_result = Beers.query.filter(Beers.id == beer_id)[0]
     brewery_result = Breweries.query.filter(Breweries.id ==
                                             beer_result.brewery_id)[0]
-    # Messy multi-assignment for 80-line limit
+    # Messy multi-assignment for 80 char line limit
     styles_results = StylesIndex.query.join(Styles, StylesIndex.style_id ==
                                             Styles.id)
     styles_results = styles_results.filter(StylesIndex.beer_id == beer_id)
