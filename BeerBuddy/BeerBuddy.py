@@ -124,7 +124,7 @@ def beer(beer_id=None):
             db.session.flush()
             if not new_rating.id:
                 session.refresh(new_rating)  # Should give us an ID
-            if len("Beer_Review"):
+            if rating_review and len(rating_review):
                 new_rating_body = RatingsBody(review_id=new_rating.id,
                                               review_body=rating_review)
                 db.session.add(new_rating_body)
