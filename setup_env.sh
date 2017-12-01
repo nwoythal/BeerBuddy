@@ -1,7 +1,7 @@
 #!/bin/bash
 
 virtualenv --help
-if [ $? ]; then
+if [ $? != 0 ]; then
     echo "Virtualenv not detected! Attempting install..."
     sudo -H pip install virtualenv --no-cache  # Needs sudo password auth from user?
 fi
