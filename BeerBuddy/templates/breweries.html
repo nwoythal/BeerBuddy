@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Breweries!</title>
+        <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #Brewery {
+            background-image: url('/css/searchicon.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        #Brewery_Table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+
+        #Brewery_Table th, #Brewery_Table td {
+            text-align: left;
+            padding: 12px;
+        }
+
+        #Brewery_Table tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        #Brewery_Table tr.header, #Brewery_Table tr:hover {
+            background-color: #f1f1f1;
+        }
+</style>
+    </head>
+    <body>
+    <input type="text" id="Brewery" onkeyup="search()" 
+    placeholder="Search for Breweries" title="Type in a name">
+    <table id="Brewery_Table">
+        <tr id="header">
+            <th>Name</th>
+            <th>Street</th>
+            <th>ZIP</th>
+            <th>City</th>
+        </tr>
+        {% for brewery in breweries %}
+        <tr>
+            <td><a href = /brewery/{{ brewery[0].id }}> {{ brewery[1] }} 
+            </a></td>
+            <td>{{ brewery.address }}</td>
+            <td>{{ brewery.zip_code }}</td>
+            <td>{{ brewery.name }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <!--Taken from W3Schools website-->
+    <script>
+    function search()
+    {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("Brewery");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("Brewery_Table");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++)
+        {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) 
+            {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) 
+                {
+                    tr[i].style.display = "";
+                }
+                else
+                {
+                    tr[i].style.display = "none";
+                }
+            }       
+        }
+    }
+    </script>
+    </body>
+</html>

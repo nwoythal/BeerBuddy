@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <title>{{ beer.name }}</title>
+    </head>
+    <body>
+        <h2>{{ beer.name }}</h2>
+        <h4>{{ beer.abv }}% ABV</h4>
+        <h4>Availability:{{ "🌸" if beer.a_spr }}
+            {{ "🌞" if beer.a_sum }}
+            {{ "🍁" if beer.a_fal }}
+            {{ "❄" if beer.a_win }}
+            {{" Limited" if not (beer.a_spr or beer.a_sum or beer.a_fal or 
+            beer.a_win)}}</h4>
+        <h4>Brewed by: <a href = /brewery/{{ brewery.id }}>{{ brewery.name }}
+        </a></h4>
+        <p>Style:
+        {% for style in styles %}
+            {{ style.style }}, 
+        {% endfor %}
+        </p>
+        <br>
+        <h3>Reviews:</h3>
+        {% if ratings %}
+            {% for rating in ratings %}
+                <h4>{{ rating.rating }}/10</h4>
+                {% if rating.review_body %}
+                    <p>{{ rating.review_body }}</p>
+                {% else %}
+                    <p style="color:grey;"><i>No review...</i></p>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>There are no ratings for this beer yet!</p>
+            <p>Why not be the first?</p>
+        {% endif %}
+        <form action="/beer/{{ beer_id }}" name="New_Review"
+         onsubmit="return validateForm()" method="post">
+             <table align="left" bgcolor="white">
+                 <tr>
+                     <th colspan="4" align="left">Score: 
+                         <input type="text" id="score" name="Beer_Rating" 
+                         maxlength="4" required/>
+                     </th>
+                 </tr>
+                 <tr>
+                 <tr>
+                     <th>Review (optional):<br>
+                         <textarea rows="10" cols="100" name="Beer_Review"></textarea>
+                     </th>
+                 </tr>
+                     <th colspan="4">
+                         <button type="submit">Submit</button>
+                     </th>
+                 </tr>
+             </table>
+        </form>
+        <script>
+        function validateForm()
+        {
+            var score = document.forms["New_Review"]["Beer_Rating"].value;
+            var textBox = document.forms["New_Review"]["Beer_Review"].value;
+            if(isNaN(score) || Number(score) > 10 || Number(score) < 0)
+            {
+                alert("Score must be a number between 0 and 10!");
+                return false;
+            }
+            if(textBox.length >= 1024)
+            {
+                alert("Your review must be shorter than 1024 characters!");
+                return false;
+            }
+            return true;
+        }
+        </script>
+    </body>
+</html>

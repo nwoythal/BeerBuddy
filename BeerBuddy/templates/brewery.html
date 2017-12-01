@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>{{ brewery.name }}</title>
+    </head>
+    <body>
+    <h2>{{ brewery.name }}</h2>
+    <h4>{{ brewery.address }}, {{ brewery.zip_code }}, {{ city.name }}</h4>
+    <table style="width 100%">
+    <tr>
+        <th>Beers</th>
+    </tr>
+    {% for beer in beers %}
+	    <tr>
+            <td><a href = /beer/{{ beer.id }}> {{ beer.name }} </a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    </body>
+</html>
