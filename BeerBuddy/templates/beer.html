@@ -6,12 +6,13 @@
     <body>
         <h2>{{ beer.name }}</h2>
         <h4>{{ beer.abv }}% ABV</h4>
-        <h4>Availability:{{ "🌸" if beer.a_spr }}
+        <h4>
+            Availability:{{ "🌸" if beer.a_spr }}
             {{ "🌞" if beer.a_sum }}
             {{ "🍁" if beer.a_fal }}
             {{ "❄" if beer.a_win }}
-            {{" Limited" if not (beer.a_spr or beer.a_sum or beer.a_fal or 
-            beer.a_win)}}</h4>
+            {{" Limited" if not (beer.a_spr or beer.a_sum or beer.a_fal or beer.a_win)}}
+        </h4>
         <h4>Brewed by: <a href = /brewery/{{ brewery.id }}>{{ brewery.name }}
         </a></h4>
         <p>Style:

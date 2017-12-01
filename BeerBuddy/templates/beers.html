@@ -1,42 +1,42 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Beer!</title>
-        <style>
-        * {
-            box-sizing: border-box;
-        }
+    <title>Beer!</title>
+    <style>
+    * {
+        box-sizing: border-box;
+    }
 
-        #Beer {
-            background-image: url('/css/searchicon.png');
-            background-position: 10px 10px;
-            background-repeat: no-repeat;
-            width: 100%;
-            font-size: 16px;
-            padding: 12px 20px 12px 40px;
-            border: 1px solid #ddd;
-            margin-bottom: 12px;
-        }
+    #Beer {
+        background-image: url('/css/searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
 
-        #Beer_Table {
-            border-collapse: collapse;
-            width: 100%;
-            border: 1px solid #ddd;
-            font-size: 18px;
-        }
+    #Beer_Table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 18px;
+    }
 
-        #Beer_Table th, #Beer_Table td {
-            text-align: left;
-            padding: 12px;
-        }
+    #Beer_Table th, #Beer_Table td {
+        text-align: left;
+        padding: 12px;
+    }
 
-        #Beer_Table tr {
-            border-bottom: 1px solid #ddd;
-        }
+    #Beer_Table tr {
+        border-bottom: 1px solid #ddd;
+    }
 
-        #Beer_Table tr.header, #Beer_Table tr:hover {
-            background-color: #f1f1f1;
-        }
+    #Beer_Table tr.header, #Beer_Table tr:hover {
+        background-color: #f1f1f1;
+    }
     </style>
     </head>
     <body>
@@ -52,17 +52,18 @@
         <tr>
             <td><a href = /beer/{{ beer[0].id }}> {{ beer[1] }} </a></td>
             <td>{{ beer.abv }}%</td>
-            <td>{{ "🌸" if beer.a_spr }} 
+            <td>
+                {{ "🌸" if beer.a_spr }} 
                 {{ "🌞" if beer.a_sum }}
                 {{ "🍁" if beer.a_fal }}
                 {{ "❄" if beer.a_win }}
-                {{"Limited" if not (beer.a_spr or beer.a_sum or beer.a_fal or 
-                beer.a_win)}}</td>
+                {{"Limited" if not (beer.a_spr or beer.a_sum or beer.a_fal or beer.a_win)}}
+            </td>
             <td>{{ beer.name }}</td>
         </tr>
-    {% endfor %}
+        {% endfor %}
     </table>
-    <!--Taken from W3Schools Website-->
+    <!--Taken from W3Schools website-->
     <script>
     function search()
     {
@@ -72,8 +73,7 @@
         filter = input.value.toUpperCase();
         table = document.getElementById("Beer_Table");
         tr = table.getElementsByTagName("tr");
-        // Loop through all table rows, and hide those who don't match the 
-        // search query
+        // Loop through all table rows, and hide those that don't match the search query
         for (i = 0; i < tr.length; i++)
         {
             td = tr[i].getElementsByTagName("td")[0];

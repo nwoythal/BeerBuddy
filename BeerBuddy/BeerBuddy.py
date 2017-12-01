@@ -90,11 +90,14 @@ def index():
 @app.route('/beer/')
 def beers():
     """Render the list of beers. See beer() for individual beer page."""
-    beer_list = Beers.query.join(Breweries, Beers.brewery_id == Breweries.id
-                                 ).add_columns(Beers.name, Beers.abv,
-                                               Beers.a_spr, Beers.a_sum,
-                                               Beers.a_fal, Beers.a_fal,
-                                               Breweries.name)
+    beer_list = Beers.query.join(Breweries, Beers.brewery_id ==
+                                 Breweries.id).add_columns(Beers.name,
+                                                           Beers.abv,
+                                                           Beers.a_spr,
+                                                           Beers.a_sum,
+                                                           Beers.a_fal,
+                                                           Beers.a_fal,
+                                                           Breweries.name)
     return render_template('beers.html', beers=beer_list)
 
 
@@ -130,15 +133,24 @@ def beer(beer_id=None):
     beer_result = Beers.query.filter(Beers.id == beer_id)[0]
     brewery_result = Breweries.query.filter(Breweries.id ==
                                             beer_result.brewery_id)[0]
-    # These two lines will violate PEP8 no matter how they are formatted.
-    styles_results = StylesIndex.query.join(Styles, StylesIndex.style_id == Styles.id).filter(StylesIndex.beer_id == beer_id).add_columns(Styles.style)
-    ratings_results = Ratings.query.join(Beers, Ratings.beer_id == Beers.id).outerjoin(RatingsBody, Ratings.id == RatingsBody.review_id).filter(Ratings.beer_id == beer_id).add_columns(Ratings.rating, RatingsBody.review_body)
+    # Messy multi-assignment for 80-line limit
+    styles_results = StylesIndex.query.join(Styles, StylesIndex.style_id ==
+                                            Styles.id)
+    styles_results = styles_results.filter(StylesIndex.beer_id == beer_id)
+    styles_results = styles_results.add_columns(Styles.style)
+    ratings_results = Ratings.query.join(Beers, Ratings.beer_id == Beers.id)
+    ratings_results = ratings_results.outerjoin(RatingsBody, Ratings.id ==
+                                                RatingsBody.review_id)
+    ratings_results = ratings_results.filter(Ratings.beer_id == beer_id)
+    ratings_results = ratings_results.add_columns(Ratings.rating,
+                                                  RatingsBody.review_body)
 
+    # Don't pass in empty query object.
     if not ratings_results.count():
         ratings_results = None
-        # Lots of data passed in. We need the beer_id so we can properly POST,
-        # and the rest is just query data so we can properly render everything.
 
+    # Lots of data passed in. We need the beer_id so we can properly POST,
+    # and the rest is just query data so we can properly render everything.
     return render_template('beer.html', beer=beer_result,
                            brewery=brewery_result, styles=styles_results,
                            ratings=ratings_results, beer_id=beer_id)
