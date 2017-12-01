@@ -109,8 +109,8 @@ def beer(beer_id=None):
     if request.method == "POST":
         # Double check values, because I don't trust JavaScript
         try:
-            rating_value = int(request.form.get('Beer_Rating'))
-        except TypeError:
+            rating_value = float(request.form.get('Beer_Rating'))
+        except (TypeError, ValueError):
             rating_value = 999999  # Sentinel value to fail compare later
         rating_review = request.form.get('Beer_Review')
         # If the data is bad, someone is probably trying something malicious,
