@@ -1,6 +1,7 @@
 """Beer Database Backend."""
 from flask import Flask, request, session, render_template
 from flask_sqlalchemy import SQLAlchemy
+import pdb
 
 
 app = Flask(__name__)
@@ -131,9 +132,11 @@ def beer(beer_id=None):
                 db.session.flush()
             db.session.commit()  # Commit changes to disk
 
-    beer_result = Beers.query.filter(Beers.id == beer_id)[0]
+    beer_result = Beers.query.filter(Beers.id == beer_id).first()
+    if not beer_result:
+        return page_not_found(404)
     brewery_result = Breweries.query.filter(Breweries.id ==
-                                            beer_result.brewery_id)[0]
+                                            beer_result.brewery_id).first()
     # Messy multi-assignment for 80 char line limit
     styles_results = StylesIndex.query.join(Styles, StylesIndex.style_id ==
                                             Styles.id)
@@ -177,9 +180,11 @@ def breweries():
 def brewery(brewery_id=None):
     """Get an invidual brewery. For the list, see breweries()."""
     # ID is unique, so just grab the first object
-    brewery_result = Breweries.query.filter(Breweries.id == brewery_id)[0]
+    brewery_result = Breweries.query.filter(Breweries.id == brewery_id).first()
+    if not brewery_result:
+        return page_not_found(404)
     city_result = Cities.query.filter(Cities.zip_code ==
-                                      brewery_result.zip_code)[0]
+                                      brewery_result.zip_code).first()
     beer_results = Beers.query.filter(Beers.brewery_id == brewery_id)
     return render_template('brewery.html', brewery=brewery_result,
                            city=city_result, beers=beer_results)
