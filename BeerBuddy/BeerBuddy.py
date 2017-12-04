@@ -149,15 +149,23 @@ def beer(beer_id=None):
     ratings_results = ratings_results.add_columns(Ratings.rating,
                                                   RatingsBody.review_body)
 
-    # Don't pass in empty query object.
+    # Calculate average. Also avoid passing in empty query object.
+    avg_rating = 0
     if not ratings_results.count():
         ratings_results = None
+        avg_rating = None
+    else:
+        for rating in ratings_results:
+            avg_rating += rating.rating
+        avg_rating = format(avg_rating/ratings_results.count(), '.2f')
+        
 
     # Lots of data passed in. We need the beer_id so we can properly POST,
-    # and the rest is just query data so we can properly render everything.
+    # and the rest is just query data so we can properly render everything. 
     return render_template('beer.html', beer=beer_result,
                            brewery=brewery_result, styles=styles_results,
-                           ratings=ratings_results, beer_id=beer_id)
+                           ratings=ratings_results, beer_id=beer_id,
+                           avg=avg_rating)
 
 
 # If we try to route to brewery without an ID, just give them the list.
