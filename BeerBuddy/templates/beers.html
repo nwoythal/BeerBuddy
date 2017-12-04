@@ -79,7 +79,8 @@
             td = tr[i].getElementsByTagName("td")[0];
             if (td)
             {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+                var name = td.innerHTML.toUpperCase().split("> ")
+                if ( name[1].indexOf(filter) > -1 )
                 {
                     tr[i].style.display = "";
                 } 
