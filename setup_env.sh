@@ -13,3 +13,5 @@ virtualenv BeerBuddy/static/env
 for LINE in $(cat dependencies.txt); do
     pip install $LINE --no-cache-dir
 done
+
+export FLASK_APP=BeerBuddy.py
