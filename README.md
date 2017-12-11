@@ -10,6 +10,7 @@ BeerBuddy is meant for those who enjoy beer. It consists of a few key components
 1. `bash setup_env.sh`
     * Creates virtual environment under BeerBuddy/static/env
     * Installs all pip dependencies.
+    * You may need to point to where the virtual environment is with:`. ./BeerBuddy/static/env/bin/activate`
 1. `flask run` in the directory with BeerBuddy.py
     * Server default is localhost:5000
 
